@@ -1,4 +1,4 @@
-tf-lambda-virus-scanner
+# tf-lambda-virus-scanner
 
 This repo deploys a [lambda based clamav virus scanning solution](https://github.com/upsidetravel/bucket-antivirus-function) using terraform.
 
