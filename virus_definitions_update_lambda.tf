@@ -52,25 +52,25 @@ EOF
 }
 
 resource "aws_lambda_function" "virus_definition_lambda" {
- filename         = "./lambdas/lambda.zip"
- function_name    = "bucket-antivirus-update"
- role             = "${aws_iam_role.virus_definition_role.arn}"
- handler          = "update.lambda_handler"
- source_code_hash = "${base64sha256("lambdas/lambda.zip")}"
- runtime          = "python2.7"
- timeout          = "300"
- memory_size      = "512"
+  filename         = "./lambdas/lambda.zip"
+  function_name    = "bucket-antivirus-update"
+  role             = "${aws_iam_role.virus_definition_role.arn}"
+  handler          = "update.lambda_handler"
+  source_code_hash = "${base64sha256("lambdas/lambda.zip")}"
+  runtime          = "python2.7"
+  timeout          = "300"
+  memory_size      = "512"
 
- environment {
-   variables = {
-     AV_DEFINITION_S3_BUCKET = "${var.virus_definition_bucket}"
-   }
- }
+  environment {
+    variables = {
+      AV_DEFINITION_S3_BUCKET = "${var.virus_definition_bucket}"
+    }
+  }
 }
 
 resource "aws_cloudwatch_log_group" "virus_scanner_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.virus_definition_lambda.function_name}"
-  retention_in_days = 90 
+  retention_in_days = 90
 }
 
 resource "aws_iam_policy" "virus_scanner_policy" {

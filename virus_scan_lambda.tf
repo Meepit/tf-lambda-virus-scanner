@@ -73,22 +73,22 @@ EOF
 }
 
 resource "aws_lambda_function" "virus_scan_lambda" {
- filename         = "./lambdas/lambda.zip"
- function_name    = "bucket-antivirus-function"
- role             = "${aws_iam_role.virus_scan_role.arn}"
- handler          = "scan.lambda_handler"
- source_code_hash = "${base64sha256("lambdas/lambda.zip")}"
- runtime          = "python2.7"
- timeout          = "300"
- memory_size      = "1024"
+  filename         = "./lambdas/lambda.zip"
+  function_name    = "bucket-antivirus-function"
+  role             = "${aws_iam_role.virus_scan_role.arn}"
+  handler          = "scan.lambda_handler"
+  source_code_hash = "${base64sha256("lambdas/lambda.zip")}"
+  runtime          = "python2.7"
+  timeout          = "300"
+  memory_size      = "1024"
 
- environment {
-   variables = {
-     AV_DEFINITION_S3_BUCKET            = "${var.virus_definition_bucket}"
-     AV_DELETE_INFECTED_FILES           = "${var.delete_infected_files}"
-     AV_PROCESS_ORIGINAL_VERSION_ONLY   = "${var.process_original_version_only}"
-   }
- }
+  environment {
+    variables = {
+      AV_DEFINITION_S3_BUCKET          = "${var.virus_definition_bucket}"
+      AV_DELETE_INFECTED_FILES         = "${var.delete_infected_files}"
+      AV_PROCESS_ORIGINAL_VERSION_ONLY = "${var.process_original_version_only}"
+    }
+  }
 }
 
 resource "aws_cloudwatch_log_group" "virus_scan_log_group" {
@@ -97,8 +97,8 @@ resource "aws_cloudwatch_log_group" "virus_scan_log_group" {
 }
 
 resource "aws_iam_policy" "virus_scan_policy" {
-  name        = "virus-scan-logging"
-  path        = "/"
+  name = "virus-scan-logging"
+  path = "/"
 
   policy = <<EOF
 {
